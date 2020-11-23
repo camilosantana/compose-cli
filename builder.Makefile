@@ -67,6 +67,12 @@ cross:
 test:
 	go test $(TAGS) -cover $(shell go list ./... | grep -vE 'e2e')
 
+.PHONY: install-linter
+install-linter:
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b . v1.30.0
+	chmod +x ./golangci-lint
+	mv ./golangci-lint /usr/bin
+
 .PHONY: lint
 lint:
 	golangci-lint run $(LINT_TAGS) --timeout 10m0s ./...
