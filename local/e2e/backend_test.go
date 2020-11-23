@@ -78,7 +78,7 @@ func TestLocalBackendRun(t *testing.T) {
 	})
 
 	t.Run("run with ports", func(t *testing.T) {
-		res := c.RunDockerCmd("run", "-d", "-p", "8080:80", "nginx")
+		res := c.RunDockerCmd("run", "-d", "-p", "8888:80", "nginx")
 		containerName := strings.TrimSpace(res.Combined())
 		t.Cleanup(func() {
 			_ = c.RunDockerOrExitError("rm", "-f", containerName)
@@ -86,7 +86,7 @@ func TestLocalBackendRun(t *testing.T) {
 		res = c.RunDockerCmd("inspect", containerName)
 		res.Assert(t, icmd.Expected{Out: `"Status": "running"`})
 		res = c.RunDockerCmd("ps")
-		res.Assert(t, icmd.Expected{Out: "0.0.0.0:8080->80/tcp"})
+		res.Assert(t, icmd.Expected{Out: "0.0.0.0:8888->80/tcp"})
 	})
 
 	t.Run("run with volume", func(t *testing.T) {
